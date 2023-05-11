@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ElectronicStoreAdmin
 {
-    class ApiClient
+    public class ApiClient
     {
-        private const string BaseUrl = "https://localhost:7078/api/";
+        public const string BaseUrl = "https://localhost:7078/api/";
 
         private static ApiClient _instance;
-        private static RestClient restClient;
+        public static RestClient restClient;
 
         private ApiClient()
         { }

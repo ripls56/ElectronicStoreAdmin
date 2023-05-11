@@ -1,20 +1,22 @@
-﻿using System.Threading.Tasks;
+﻿using ElectronicStoreAdmin.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.Navigation;
 
 namespace ElectronicStoreAdmin.Views.Pages
 {
     /// <summary>
     /// Логика взаимодействия для Authorization.xaml
     /// </summary>
-    public partial class Authorization : Page
+    public partial class Authorization : INavigableView<AuthViewModel>
     {
-        private ApiClient apiClient;
-        public Authorization()
+        private Window parentWindow;
+        public Authorization(Window parentWindow, ViewModels.AuthViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
-            apiClient = ApiClient.getInstance();
+            this.parentWindow = parentWindow;
         }
 
 
@@ -25,16 +27,20 @@ namespace ElectronicStoreAdmin.Views.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var page = new ViewData();
+            ViewModel.GetToken(completed =>
             {
-                apiClient.GetAccessTokenAsync(Login.Text, Password.Password).GetAwaiter().GetResult();
-            }
-            catch
-            {
-                Snackbar.Show();
-            }
-            
+                if (completed)
+                {
+                    NavigationService?.Navigate(page);
+                }
+                else
+                {
+                    Snackbar.Show();
+                }
+            }, Login.Text, Password.Password);
         }
 
+        public AuthViewModel ViewModel { get; }
     }
 }

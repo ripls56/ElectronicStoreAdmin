@@ -27,8 +27,7 @@
                 Height="10"/>
             <ui:PasswordBox
                 Name="Password"
-                PlaceholderText="Пароль"
-                ClearButtonEnabled="True"/>
+                PlaceholderText="Пароль"/>
             <Rectangle
                 Height="20"/>
             <ui:Button
@@ -61,7 +60,6 @@
             Name="Snackbar"
             Timeout="10000"
             Title="Ошибка"
-            Icon="C:\Users\ripls\source\repos\ElectronicStoreAdmin\ElectronicStoreAdmin\Assets\applicationIcon-1024.png"
             Message="Произошла ошибка! Попробуйте еще раз"
             Appearance="Danger" />
     </Grid>
