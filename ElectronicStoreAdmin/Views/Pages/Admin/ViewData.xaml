@@ -13,12 +13,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
         <ComboBox
+            Name="ComboBox"
             SelectionChanged="Selector_OnSelectionChanged">
             <ComboBoxItem Name="Brand" Content="Бренды"></ComboBoxItem>
             <ComboBoxItem Name="Client" Content="Клиенты"></ComboBoxItem>
-            <ComboBoxItem Name="CleintOrder" Content="Заказы клиентов"></ComboBoxItem>
             <ComboBoxItem Name="ClientPromocode" Content="Использованные промокоды"></ComboBoxItem>
             <ComboBoxItem Name="DefectInformation" Content="Брак"></ComboBoxItem>
             <ComboBoxItem Name="Employee" Content="Сотрудники"></ComboBoxItem>
@@ -39,12 +40,35 @@
             <ComboBoxItem Name="VendorType" Content="Типы поставщиков"></ComboBoxItem>
         </ComboBox>
         <DataGrid
+            SelectionChanged="DataGrid_OnSelectionChanged"
+            CanUserReorderColumns="False"
             CellEditEnding="DataGrid_OnCellEditEnding"
             Grid.Row="1"
-            Name="DataGrid"/>
+            SelectedCellsChanged="DataGrid_OnSelectedCellsChanged"
+            Name="DataGrid">
+        </DataGrid>
+        <StackPanel
+            Orientation="Horizontal"
+            Grid.Row="2">
+            <StackPanel
+                HorizontalAlignment="Left"
+                Orientation="Horizontal"
+                Name="GeneratePanel"
+                Grid.Row="2">
+            </StackPanel>
+            <Border
+                Padding="16, 0"
+                Grid.Row="2">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <ui:Button Name="AddButton" Click="AddButton_Click">Добавить</ui:Button>
+                    <Rectangle Width="20"></Rectangle>
+                    <ui:Button Name="DelButton">Удалить</ui:Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
         <ui:Snackbar
-            Width="300"
-            Grid.Row="1"
+            Grid.Row="2"
             Background="{DynamicResource ApplicationBackgroundBrush}"
             Name="Snackbar"
             Timeout="10000"

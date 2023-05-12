@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -9,6 +10,7 @@ using ElectronicStoreAdmin.Views.Pages;
 using RestSharp.Authenticators;
 using RestSharp.Authenticators.OAuth2;
 using RestSharp.Serializers;
+using System.Collections;
 
 namespace ElectronicStoreAdmin
 {
@@ -60,10 +62,91 @@ namespace ElectronicStoreAdmin
             throw new HttpRequestException();
         }
 
+
+        #region Get
+
         public Task<List<Brand>?> GetBrandsAsync() => restClient.GetJsonAsync<List<Brand>>("brands");
 
         public Task<List<Client>?> GetClientsAsync() => restClient.GetJsonAsync<List<Client>>("clients");
 
+        public Task<List<ClientPromocode>?> GetClientPromocodesAsync => restClient.GetJsonAsync<List<ClientPromocode>>("ClientPromocodes");
+
+        public Task<List<DefectInformation>?> GetDefectInformationsAsync => restClient.GetJsonAsync<List<DefectInformation>>("DefectInformations");
+
+        public Task<List<EmployeeAddress>?> GetEmployeeAddressesAsync => restClient.GetJsonAsync<List<EmployeeAddress>>("EmployeeAddresses");
+
+        public Task<List<Employee>?> GetEmployeesAsync() => restClient.GetJsonAsync<List<Employee>>("Employees");
+
+        public Task<List<Feedback>?> GetFeedbacksAsync() => restClient.GetJsonAsync<List<Feedback>>("Feedbacks");
+
+        public Task<List<LoyaltyCard>?> GetLoyaltyCardsAsync() => restClient.GetJsonAsync<List<LoyaltyCard>>("LoyaltyCards");
+
+        public Task<List<NomenclatureOrder>?> GetNomenclatureOrdersAsync() => restClient.GetJsonAsync<List<NomenclatureOrder>>("NomenclatureOrders");
+
+        public Task<List<Nomenclature>?> GetNomenclaturesAsync() => restClient.GetJsonAsync<List<Nomenclature>>("Nomenclatures");
+
+        public Task<List<OrderHistory>?> GetOrderHistoriesAsync() => restClient.GetJsonAsync<List<OrderHistory>>("OrderHistories");
+
+        public Task<List<Order>?> GetOrdersAsync() => restClient.GetJsonAsync<List<Order>>("Orders");
+
+        public Task<List<Post>?> GetPostsAsync() => restClient.GetJsonAsync<List<Post>>("Posts");
+
+        public Task<List<ProductСategory>?> GetProductСategoriesAsync() => restClient.GetJsonAsync<List<ProductСategory>>("ProductСategory");
+
+        public Task<List<Profile>?> GetProfilesAsync() => restClient.GetJsonAsync<List<Profile>>("Profiles");
+
+        public Task<List<Promocode>?> GetPromocodesAsync() => restClient.GetJsonAsync<List<Promocode>>("Promocodes");
+
+        public Task<List<Stock>?> GetStocksAsync() => restClient.GetJsonAsync<List<Stock>>("Stocks");
+
+        public Task<List<StoreAddress>?> GetStoreAddressesAsync() => restClient.GetJsonAsync<List<StoreAddress>>("StoreAddresses");
+
+        public Task<List<Supply>?> GetSuppliesAsync() => restClient.GetJsonAsync<List<Supply>>("Supplies");
+
+        public Task<List<VendorType>?> GetVendorTypesAsync() => restClient.GetJsonAsync<List<VendorType>>("Supplies");
+
+        public void PostAsync(object item, string endpoint) => restClient.PostJsonAsync(endpoint, item);
+
+        #endregion
+        public void PutBrandAsync(Brand item) => restClient.PutJsonAsync($"brands/{item.IdBrands}", item);
+
+        public void PutClientsAsync(Client item) => restClient.PutJsonAsync<Client>("clients", item);
+
+        public void PutClientPromocodesAsync(ClientPromocode item) => restClient.PutJsonAsync<ClientPromocode>("ClientPromocodes", item);
+
+        public void PutDefectInformationsAsync(DefectInformation item) => restClient.PutJsonAsync<DefectInformation>("DefectInformations", item);
+
+        public void PutEmployeeAddressesAsync(EmployeeAddress item) => restClient.PutJsonAsync<EmployeeAddress>("EmployeeAddresses", item);
+
+        public void PutEmployeesAsync(Employee item) => restClient.PutJsonAsync<Employee>("Employees", item);
+
+        public void PutFeedbacksAsync(Feedback item) => restClient.PutJsonAsync<Feedback>("Feedbacks", item);
+
+        public void PutLoyaltyCardsAsync(LoyaltyCard item) => restClient.PutJsonAsync<LoyaltyCard>("LoyaltyCards", item);
+
+        public void PutNomenclatureOrdersAsync(NomenclatureOrder item) => restClient.PutJsonAsync<NomenclatureOrder>("NomenclatureOrders", item);
+
+        public void PutNomenclaturesAsync(Nomenclature item) => restClient.PutJsonAsync<Nomenclature>("Nomenclatures", item);
+
+        public void GPutOrderHistoriesAsync(OrderHistory item) => restClient.PutJsonAsync<OrderHistory>("OrderHistories", item);
+
+        public void PutOrdersAsync(Order item) => restClient.PutJsonAsync<Order>("Orders", item);
+
+        public void PutPostsAsync(Post item) => restClient.PutJsonAsync<Post>("Posts", item);
+
+        public void PutProductСategoriesAsync(ProductСategory item) => restClient.PutJsonAsync<ProductСategory>("ProductСategory", item);
+
+        public void PutProfilesAsync(Profile item) => restClient.PutJsonAsync<Profile>("Profiles", item);
+
+        public void PutPromocodesAsync(Promocode item) => restClient.PutJsonAsync<Promocode>("Promocodes", item);
+
+        public void PutStocksAsync(Stock item) => restClient.PutJsonAsync<Stock>("Stocks", item);
+
+        public void PutStoreAddressesAsync(StoreAddress item) => restClient.PutJsonAsync<StoreAddress>("StoreAddresses", item);
+
+        public void PutSuppliesAsync(Supply item) => restClient.PutJsonAsync<Supply>("Supplies", item);
+
+        public void PutVendorTypesAsync(VendorType item) => restClient.PutJsonAsync<VendorType>("Supplies", item);
 
     }
 }
