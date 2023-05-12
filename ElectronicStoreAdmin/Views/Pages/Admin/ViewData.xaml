@@ -1,0 +1,55 @@
+﻿<Page x:Class="ElectronicStoreAdmin.Views.Pages.ViewData"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ElectronicStoreAdmin.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ViewData"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ComboBox
+            SelectionChanged="Selector_OnSelectionChanged">
+            <ComboBoxItem Name="Brand" Content="Бренды"></ComboBoxItem>
+            <ComboBoxItem Name="Client" Content="Клиенты"></ComboBoxItem>
+            <ComboBoxItem Name="CleintOrder" Content="Заказы клиентов"></ComboBoxItem>
+            <ComboBoxItem Name="ClientPromocode" Content="Использованные промокоды"></ComboBoxItem>
+            <ComboBoxItem Name="DefectInformation" Content="Брак"></ComboBoxItem>
+            <ComboBoxItem Name="Employee" Content="Сотрудники"></ComboBoxItem>
+            <ComboBoxItem Name="EmployeeAddress" Content="Адреса сотрудников"></ComboBoxItem>
+            <ComboBoxItem Name="Feedback" Content="Отзывы"></ComboBoxItem>
+            <ComboBoxItem Name="LoyaltyCard" Content="Карты лояльности"></ComboBoxItem>
+            <ComboBoxItem Name="Nomenclature" Content="товары"></ComboBoxItem>
+            <ComboBoxItem Name="NomenclatureOrder" Content="Заказанные товары"></ComboBoxItem>
+            <ComboBoxItem Name="Order" Content="Заказы"></ComboBoxItem>
+            <ComboBoxItem Name="OrderHistory" Content="История заказов"></ComboBoxItem>
+            <ComboBoxItem Name="Post" Content="Должности"></ComboBoxItem>
+            <ComboBoxItem Name="ProductCategory" Content="Категори товаров"></ComboBoxItem>
+            <ComboBoxItem Name="Profile" Content="Профили"></ComboBoxItem>
+            <ComboBoxItem Name="Promocode" Content="Промокоды"></ComboBoxItem>
+            <ComboBoxItem Name="Stock" Content="Склад"></ComboBoxItem>
+            <ComboBoxItem Name="StoreAddress" Content="Адреса магазинов"></ComboBoxItem>
+            <ComboBoxItem Name="Supply" Content="Поставщики"></ComboBoxItem>
+            <ComboBoxItem Name="VendorType" Content="Типы поставщиков"></ComboBoxItem>
+        </ComboBox>
+        <DataGrid
+            CellEditEnding="DataGrid_OnCellEditEnding"
+            Grid.Row="1"
+            Name="DataGrid"/>
+        <ui:Snackbar
+            Width="300"
+            Grid.Row="1"
+            Background="{DynamicResource ApplicationBackgroundBrush}"
+            Name="Snackbar"
+            Timeout="10000"
+            Title="Ошибка"
+            Message="Произошла ошибка! Попробуйте еще раз"
+            Appearance="Danger" />
+    </Grid>
+</Page>

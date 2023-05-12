@@ -10,19 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ElectronicStoreAdmin.Views.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для ViewData.xaml
+    /// Логика взаимодействия для AdminWindow.xaml
     /// </summary>
-    public partial class ViewData : Page
+    public partial class AdminWindow
     {
-        public ViewData()
+        public AdminWindow()
         {
+            DataContext = this;
+
             InitializeComponent();
+
+            Loaded += (_, _) => NavigationView.Navigate(typeof(ViewData));
         }
     }
 }

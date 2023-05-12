@@ -1,6 +1,4 @@
-﻿using RestSharp;
-
-namespace ElectronicStoreAdmin.ViewModels
+﻿namespace ElectronicStoreAdmin.ViewModels
 {
     public partial class AuthViewModel
     {
@@ -17,7 +15,7 @@ namespace ElectronicStoreAdmin.ViewModels
             try
             {
                 var token = apiClient.GetAccessTokenAsync(login, password).GetAwaiter().GetResult() ?? string.Empty;
-                ApiClient.restClient.AddDefaultHeader("Authorization", $"Bearer {token}");
+                ApiClient.addTokenToRestClientInstance(token);
                 callback(true);
             }
             catch

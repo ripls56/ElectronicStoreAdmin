@@ -1,8 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ElectronicStoreAdmin.Models;
+using ElectronicStoreAdmin.Views.Pages;
+using RestSharp.Authenticators;
+using RestSharp.Authenticators.OAuth2;
+using RestSharp.Serializers;
 
 namespace ElectronicStoreAdmin
 {
@@ -21,14 +27,22 @@ namespace ElectronicStoreAdmin
             if (_instance == null)
             {
                 _instance = new ApiClient();
-                restClient = new RestClient();
+                restClient = new RestClient(new RestClientOptions(baseUrl: BaseUrl));
             }
             return _instance;
         }
 
+        public static void addTokenToRestClientInstance(string token)
+        {
+            restClient = new RestClient(new RestClientOptions(baseUrl: BaseUrl)
+            {
+                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(token, tokenType: "Bearer")
+            });
+        }
+
         public async Task<string?> GetAccessTokenAsync(string login, string password)
         {
-            var request = new RestRequest(BaseUrl + "token/employee");
+            var request = new RestRequest("token/employee");
             var body = new
             {
                 login = login,
@@ -44,7 +58,12 @@ namespace ElectronicStoreAdmin
             }
 
             throw new HttpRequestException();
-
         }
+
+        public Task<List<Brand>?> GetBrandsAsync() => restClient.GetJsonAsync<List<Brand>>("brands");
+
+        public Task<List<Client>?> GetClientsAsync() => restClient.GetJsonAsync<List<Client>>("clients");
+
+
     }
 }

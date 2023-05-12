@@ -21,11 +21,13 @@
             MinWidth="100">
             <ui:TextBox
                 Name="Login"
+                Text="employee1"
                 PlaceholderText="Логин"
                 ClearButtonEnabled="True"/>
             <Rectangle
                 Height="10"/>
             <ui:PasswordBox
+                Password="password1"
                 Name="Password"
                 PlaceholderText="Пароль"/>
             <Rectangle

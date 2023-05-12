@@ -32,7 +32,10 @@ namespace ElectronicStoreAdmin.Views.Pages
             {
                 if (completed)
                 {
-                    NavigationService?.Navigate(page);
+                    var window = new AdminWindow();
+                    window.Show();
+                    parentWindow.Close();
+                    ////NavigationService?.Navigate(page);
                 }
                 else
                 {
