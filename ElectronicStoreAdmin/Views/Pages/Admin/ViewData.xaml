@@ -40,7 +40,6 @@
             <ComboBoxItem Name="VendorType" Content="Типы поставщиков"></ComboBoxItem>
         </ComboBox>
         <DataGrid
-            SelectionChanged="DataGrid_OnSelectionChanged"
             CanUserReorderColumns="False"
             CellEditEnding="DataGrid_OnCellEditEnding"
             Grid.Row="1"
@@ -63,7 +62,7 @@
                     Orientation="Horizontal">
                     <ui:Button Name="AddButton" Click="AddButton_Click">Добавить</ui:Button>
                     <Rectangle Width="20"></Rectangle>
-                    <ui:Button Name="DelButton">Удалить</ui:Button>
+                    <ui:Button Name="DelButton" Click="DelButton_Click">Удалить</ui:Button>
                 </StackPanel>
             </Border>
         </StackPanel>

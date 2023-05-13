@@ -35,7 +35,7 @@ namespace ElectronicStoreAdmin.Views.Pages
 
         private void AddCheckBoxInLastColumn(DataGrid dg)
         {
-            dg.Columns.Insert(0,new DataGridCheckBoxColumn());
+            //dg.Columns.Insert(0,new DataGridCheckBoxColumn());
         }
 
         private void Refresh(object sender)
@@ -223,18 +223,36 @@ namespace ElectronicStoreAdmin.Views.Pages
             }
         }
 
+        HashSet<string> nums = new HashSet<string>();
+
         private void DataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            //var cells = (sender as DataGrid).SelectedCells;
-            //Snackbar.Show(cells.Count.ToString());
-
+            var items = (sender as DataGrid).SelectedItems;
+            //new controls.Snackbar
+            //{
+            //    Title = "Добавлено для удаления"
+            //}.Show();
+            foreach (var item in items)
+            {
+                var property = item.GetType().GetProperties()[0];
+                if (property.PropertyType == typeof(int?))
+                {
+                    nums.Add(property.GetValue(item)?.ToString() + '&');
+                }
+            }
         }
 
-        private void DataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DelButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var cells = (sender as DataGrid).SelectedCells;
-            Snackbar.Show(cells.Count.ToString());
+            string endpoint = "";
+            foreach (var item in nums)
+            {
+                endpoint += item + '&';
+            }
 
+            Snackbar.Show(endpoint);
+            ApiClient.getInstance().DeleteAsync(endpoint);
+            nums = new HashSet<string>();
         }
     }
 }

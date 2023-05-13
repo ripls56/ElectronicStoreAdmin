@@ -107,6 +107,8 @@ namespace ElectronicStoreAdmin
 
         public void PostAsync(object item, string endpoint) => restClient.PostJsonAsync(endpoint, item);
 
+        public void DeleteAsync(string endpoint) => restClient.DeleteAsync(new RestRequest(endpoint));
+
         #endregion
         public void PutBrandAsync(Brand item) => restClient.PutJsonAsync($"brands/{item.IdBrands}", item);
 
