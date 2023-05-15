@@ -1,13 +1,13 @@
-﻿<Page x:Class="ElectronicStoreAdmin.Views.Pages.Auth.Authorization"
+﻿<Page x:Class="ElectronicStoreAdmin.Views.Pages.Auth.Registration"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ElectronicStoreAdmin.Views.Pages"
+      xmlns:local="clr-namespace:ElectronicStoreAdmin.Views.Pages.Auth"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Authorization">
+      Title="Registration">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,7 +33,7 @@
             <Rectangle
                 Height="20"/>
             <ui:Button
-                Content="Войти"
+                Content="Зарегистрироваться"
                 Width="170"
                 HorizontalAlignment="Center"
                 Click="Button_Click"/>
@@ -44,14 +44,14 @@
                 HorizontalAlignment="Center">
                 <TextBlock
                     Foreground="LightGray"
-                    Text="Нет аккаунта?"
+                    Text="Уже зарегистрированы?"
                     VerticalAlignment="Center"/>
                 <Rectangle
                     Width="4"/>
                 <ui:Hyperlink
                     FontSize="12"
                     Click="ButtonBase_OnClick"
-                    Content="Зарегистрироваться"
+                    Content="Войти"
                     HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>

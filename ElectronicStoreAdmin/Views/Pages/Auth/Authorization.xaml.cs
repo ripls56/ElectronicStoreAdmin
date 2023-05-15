@@ -1,9 +1,8 @@
 ﻿using ElectronicStoreAdmin.ViewModels;
 using System.Windows;
-using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Navigation;
 
-namespace ElectronicStoreAdmin.Views.Pages
+namespace ElectronicStoreAdmin.Views.Pages.Auth
 {
     /// <summary>
     /// Логика взаимодействия для Authorization.xaml
@@ -22,12 +21,13 @@ namespace ElectronicStoreAdmin.Views.Pages
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-
+            var page = new Registration(parentWindow);
+            NavigationService?.Navigate(page);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var page = new ViewData();
+            //var page = new ViewData();
             ViewModel.GetToken(completed =>
             {
                 if (completed)
@@ -35,7 +35,7 @@ namespace ElectronicStoreAdmin.Views.Pages
                     var window = new AdminWindow();
                     window.Show();
                     parentWindow.Close();
-                    ////NavigationService?.Navigate(page);
+                    //NavigationService?.Navigate(page);
                 }
                 else
                 {

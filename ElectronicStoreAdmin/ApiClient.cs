@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using ElectronicStoreAdmin.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using RestSharp.Authenticators.OAuth2;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ElectronicStoreAdmin.Models;
-using ElectronicStoreAdmin.Views.Pages;
-using RestSharp.Authenticators;
-using RestSharp.Authenticators.OAuth2;
-using RestSharp.Serializers;
-using System.Collections;
 
 namespace ElectronicStoreAdmin
 {
@@ -110,6 +105,7 @@ namespace ElectronicStoreAdmin
         public void DeleteAsync(string endpoint) => restClient.DeleteAsync(new RestRequest(endpoint));
 
         #endregion
+        public void PutAsyncModel(object item, string endpoint) => restClient.PutJsonAsync(endpoint, item);
         public void PutBrandAsync(Brand item) => restClient.PutJsonAsync($"brands/{item.IdBrands}", item);
 
         public void PutClientsAsync(Client item) => restClient.PutJsonAsync<Client>("clients", item);

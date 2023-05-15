@@ -1,8 +1,8 @@
 ﻿using ElectronicStoreAdmin.ViewModels;
 using ElectronicStoreAdmin.Views.Pages;
-using System.Windows.Controls;
+using ElectronicStoreAdmin.Views.Pages.Auth;
 
-namespace ElectronicStoreAdmin
+namespace ElectronicStoreAdmin.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

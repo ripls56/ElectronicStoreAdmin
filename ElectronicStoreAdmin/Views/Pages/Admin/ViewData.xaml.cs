@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls.NumberBoxControl;
 using controls = Wpf.Ui.Controls;
+using DataGrid = System.Windows.Controls.DataGrid;
+using TextBox = System.Windows.Controls.TextBox;
 
-namespace ElectronicStoreAdmin.Views.Pages
+namespace ElectronicStoreAdmin.Views.Pages.Admin
 {
     /// <summary>
     /// Логика взаимодействия для ViewData.xaml
@@ -170,6 +171,9 @@ namespace ElectronicStoreAdmin.Views.Pages
                             propertyInfo.SetValue(lastObject, (e.EditingElement as TextBox).Text);
                         }
                     }
+
+                    var a = endpointName() + $"/{lastObject.GetType().GetProperties().First().GetValue(lastObject)}";
+                    ApiClient.getInstance().PutAsyncModel(lastObject, endpointName() + $"/{lastObject.GetType().GetProperties().First().GetValue(lastObject)}");
                 }
                 else
                 {
@@ -205,16 +209,7 @@ namespace ElectronicStoreAdmin.Views.Pages
                 }
                 type.GetProperties()[0].SetValue(inst, null);
 
-                var endpoint = "";
-                if (type.Name.Last() == 'y')
-                {
-                    endpoint = type.Name.Substring(type.Name.Length - 1) + "ies";
-                }
-                else
-                {
-                    endpoint = type.Name + "s";
-                }
-                ApiClient.getInstance().PostAsync(inst, endpoint);
+                ApiClient.getInstance().PostAsync(inst, endpointName());
                 Refresh(ComboBox);
             }
             catch (Exception exception)
@@ -227,32 +222,54 @@ namespace ElectronicStoreAdmin.Views.Pages
 
         private void DataGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            var items = (sender as DataGrid).SelectedItems;
-            //new controls.Snackbar
-            //{
-            //    Title = "Добавлено для удаления"
-            //}.Show();
-            foreach (var item in items)
+            try
             {
-                var property = item.GetType().GetProperties()[0];
-                if (property.PropertyType == typeof(int?))
+                var items = (sender as DataGrid).SelectedItems;
+                //new controls.Snackbar
+                //{
+                //    Title = "Добавлено для удаления"
+                //}.Show();
+                foreach (var item in items)
                 {
-                    nums.Add(property.GetValue(item)?.ToString() + '&');
+                    var property = item.GetType().GetProperties()[0];
+                    if (property.PropertyType == typeof(int?))
+                    {
+                        nums.Add(property.GetValue(item)?.ToString() + '&');
+                    }
                 }
             }
+            catch
+            {
+
+            }
+
         }
 
         private void DelButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            string endpoint = "";
+            string endpoint = endpointName() + '?';
             foreach (var item in nums)
             {
-                endpoint += item + '&';
+                endpoint += "idList=" + item + '&';
             }
 
             Snackbar.Show(endpoint);
             ApiClient.getInstance().DeleteAsync(endpoint);
             nums = new HashSet<string>();
+        }
+
+        string endpointName()
+        {
+            var endpoint = "";
+            if (type.Name.Last() == 'y')
+            {
+                endpoint = type.Name.Substring(type.Name.Length - 1) + "ies";
+            }
+            else
+            {
+                endpoint = type.Name + "s";
+            }
+            return endpoint;
         }
     }
 }
