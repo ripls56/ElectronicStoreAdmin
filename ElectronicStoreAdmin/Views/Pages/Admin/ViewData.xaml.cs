@@ -1,8 +1,14 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
 using Wpf.Ui.Controls.NumberBoxControl;
 using controls = Wpf.Ui.Controls;
 using DataGrid = System.Windows.Controls.DataGrid;
@@ -168,7 +174,16 @@ namespace ElectronicStoreAdmin.Views.Pages.Admin
                     {
                         if (propertyInfo.Name.Equals(header))
                         {
-                            propertyInfo.SetValue(lastObject, (e.EditingElement as TextBox).Text);
+                            var text = (e.EditingElement as TextBox).Text;
+                            if (text == null) continue;
+                            if (propertyInfo.PropertyType == typeof(string))
+                                propertyInfo.SetValue(lastObject, text);
+                            if (propertyInfo.PropertyType == typeof(decimal?))
+                                propertyInfo.SetValue(lastObject, Convert.ToDecimal(text));
+                            if (propertyInfo.PropertyType == typeof(DateTime?))
+                                propertyInfo.SetValue(lastObject, DateTime.Parse(text));
+                            if (propertyInfo.PropertyType == typeof(bool))
+                                propertyInfo.SetValue(lastObject, Convert.ToBoolean(text));
                         }
                     }
 
@@ -247,15 +262,35 @@ namespace ElectronicStoreAdmin.Views.Pages.Admin
 
         private void DelButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            string endpoint = endpointName() + '?';
-            foreach (var item in nums)
+            try
             {
-                endpoint += "idList=" + item + '&';
+                //string endpoint = endpointName() + '?';
+                //foreach (var item in nums)
+                //{
+                //    endpoint += "idList=" + item + '&';
+                //}
+
+                //Snackbar.Show(endpoint);
+
+                //nums = new HashSet<string>();
+                var endpoint = type.Name;
+                if (type.Name.Last() == 'y')
+                    endpoint = $"{endpoint.Remove(endpoint.Length - 1)}ies";
+                else endpoint += "s";
+                endpoint += "/";
+                endpoint += nums.Last();
+                endpoint = endpoint.Replace("&&", "&").TrimEnd('&');
+
+                Snackbar.Show(endpoint);
+                //Orderrs?idList=4&idList=3
+                ApiClient.getInstance().DeleteAsync(endpoint);
+                nums = new HashSet<string>();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Show(ex.Message);
             }
 
-            Snackbar.Show(endpoint);
-            ApiClient.getInstance().DeleteAsync(endpoint);
-            nums = new HashSet<string>();
         }
 
         string endpointName()
@@ -270,6 +305,65 @@ namespace ElectronicStoreAdmin.Views.Pages.Admin
                 endpoint = type.Name + "s";
             }
             return endpoint;
+        }
+
+        private void ResButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //https://localhost:7008/api/Orderrs/recovery?id=1'
+                var endpoint = type.Name;
+                if (type.Name.Last() == 'y')
+                    endpoint = $"{endpoint.Remove(endpoint.Length - 1)}ies";
+                else endpoint += "s";
+                endpoint += "/restore?id=";
+                endpoint = endpoint.Replace("&&", "&");
+                foreach (var item in nums)
+                {
+                    ApiClient.getInstance().PostAsync(item, endpoint + item);
+                }
+                nums = new HashSet<string>();
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Show(ex.Message);
+            }
+        }
+
+        private void ExportButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string Filepath = @$"{path}\doc.docx";
+                using var wordprocessingDocument = WordprocessingDocument.Create(Filepath, WordprocessingDocumentType.Document);
+                MainDocumentPart mainPart = wordprocessingDocument.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body body = mainPart.Document.AppendChild(new Body());
+                DocumentFormat.OpenXml.Wordprocessing.Paragraph para = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+                ParagraphProperties paragraphProperties1 = new ParagraphProperties();
+                var clients = ApiClient.getInstance().GetClientsAsync().GetAwaiter().GetResult();
+                foreach (var client in clients)
+                {
+                    run.AppendChild(new Text($"Логин: {client.LoginClient} \"\"\n"));
+                    run.AppendChild(new Break());
+                    run.AppendChild(new Text($"Email: {client.EmailClient} \"\"\n"));
+                    run.AppendChild(new Break());
+                    run.AppendChild(new Text($"Номер телефона: {client.PhoneClient} \"\"\n"));
+                    run.AppendChild(new Break());
+                    run.AppendChild(new Text(" ================================================== \"\"\n"));
+                    run.AppendChild(new Break());
+                }
+
+                wordprocessingDocument.MainDocumentPart.Document.Save();
+
+                Snackbar.Show("Готово", "Экспорт выполнен успешно", new IconSourceElement(), ControlAppearance.Success);
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Show(ex.Message);
+            }
         }
     }
 }

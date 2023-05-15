@@ -15,7 +15,9 @@
         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         WindowBackdropType="Mica"
         WindowCornerPreference="Round"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Loaded="MainWindow_OnLoaded"
+        Closed="MainWindow_OnClosed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>

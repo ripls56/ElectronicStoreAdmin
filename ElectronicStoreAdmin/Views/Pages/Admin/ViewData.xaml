@@ -63,6 +63,10 @@
                     <ui:Button Name="AddButton" Click="AddButton_Click">Добавить</ui:Button>
                     <Rectangle Width="20"></Rectangle>
                     <ui:Button Name="DelButton" Click="DelButton_Click">Удалить</ui:Button>
+                    <Rectangle Width="20"></Rectangle>
+                    <ui:Button Name="ResButton" Click="ResButton_OnClick">Восстановить</ui:Button>
+                    <Rectangle Width="20"></Rectangle>
+                    <ui:Button Name="ExportButton" Click="ExportButton_OnClick">Экспорт</ui:Button>
                 </StackPanel>
             </Border>
         </StackPanel>

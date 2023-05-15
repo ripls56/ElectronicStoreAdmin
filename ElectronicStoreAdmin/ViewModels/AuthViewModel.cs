@@ -4,7 +4,7 @@
     {
         private ApiClient apiClient;
 
-        public delegate void WorkCompletedCallBack(bool isCompleted);
+        public delegate void WorkCompletedCallBack(bool isCompleted, string? token);
 
         public AuthViewModel(ApiClient apiClient)
         {
@@ -16,11 +16,11 @@
             {
                 var token = apiClient.GetAccessTokenAsync(login, password).GetAwaiter().GetResult() ?? string.Empty;
                 ApiClient.addTokenToRestClientInstance(token);
-                callback(true);
+                callback(true, token);
             }
             catch
             {
-                callback(false);
+                callback(false, null);
             }
         }
     }
